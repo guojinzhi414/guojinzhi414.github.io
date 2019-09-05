@@ -8,7 +8,27 @@
 			margin: 0;
 			padding: 0;
 		}
-
+		.lee1-enter,.lee1-leave-to{
+			top: 120px !important;
+			opacity: 0;
+		}
+		.lee1-enter-active,.lee1-leave-active{
+			transition:0.35s;
+		}
+		.lee2-enter,.lee2-leave-to{
+			left: -120px !important;
+			opacity: 0;
+		}
+		.lee2-enter-active,.lee2-leave-active{
+			transition:0.35s;
+		}
+		.lee3-enter,.lee3-leave-to{
+			top: 120px !important;
+			opacity: 0;
+		}
+		.lee3-enter-active,.lee3-leave-active{
+			transition:0.35s;
+		}
 	</style>
 </head>
 <body>
@@ -17,7 +37,27 @@
 	</div>
 
 	<template id="lee">
-		
+		<div style="position: relative;">
+			<div style="height: 60px;line-height: 60px;text-align: center;background-color: #000;color: #fff;" @click="btn1">首页</div>
+			<transition :name="no1_name">
+				<div style="width:100%;position: absolute;top:60px;left:0;background-color: #000;color: #fff;line-height: 50px;text-align: center;" v-show="type">
+					<div v-for="(i,$index) in arr">
+						{{i.title}}
+						<span v-show="i.arr.length" style="position: absolute;right: 20px;" @click="btn2(i.arr)"> &gt; </span>
+					</div>
+				</div>
+			</transition>
+			<transition :name="no2_name">
+				<div style="width:100%;position: absolute;top:60px;background-color: #000;color: #fff;line-height: 50px;text-align: center;z-index: 2;" v-show="type2">
+					<div @click="btn3">
+						返回上一级
+					</div>
+					<div v-for="i in z_arr">
+						{{i}}
+					</div>
+				</div>
+			</transition>
+		</div>
 	</template>
 
 </body>
@@ -25,7 +65,45 @@
 <script type="text/javascript">
 	Vue.component('lee',{
 		template:'#lee',
-		
+		data(){
+			return {
+				no1_name:'lee1',
+				no2_name:'lee3',
+				type:false,
+				type2:false,
+				arr:[
+					{title:'首页',arr:[]},
+					{title:'软件产品',arr:['产品1','产品2','产品3']},
+					{title:'no2',arr:['no2_1','no2_2']},
+					{title:'no3',arr:[]},
+					{title:'no4',arr:[]},
+				],
+				z_arr:[]
+			}
+		},
+		methods:{
+			btn1(){
+				if(this.type2){
+					this.type2 = false;
+				}else{
+					this.no1_name = 'lee1';
+					this.type = !this.type;
+				}
+				
+			},
+			btn2(arr){
+				this.no1_name = 'lee2';
+				this.type = false;
+				this.z_arr = arr;
+				setTimeout(()=>{
+					this.type2 = true;
+				},200)
+			},
+			btn3(){
+				this.type2 = false;
+				this.type = true
+			}
+		}
 	})
 	new Vue({
 		el:'.box'
