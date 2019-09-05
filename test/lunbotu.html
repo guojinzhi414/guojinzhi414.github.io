@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.lee-enter,.lee2-leave-to{
+			margin-left: 690px;
+			opacity: 0;
+		}
+		.lee-enter-active,.lee-leave-active,.lee2-enter-active,.lee2-leave-active{
+			transition:.35s;
+		}
+		.lee-leave-to,.lee2-enter{
+			margin-left: -690px;
+			opacity: 0;
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<lee style="text-align: center;"></lee>
+	</div>
+	<template id="lee">
+		<div>
+			<button @click="prev">上一个</button>
+			<button @click="next">下一个</button>
+			<div style="width: 690px;height:460px;margin: 0 auto;position: relative;overflow: hidden;">
+				<transition v-for="(i,$index) in arr" :name="type">
+					<div style="width: 690px;position: absolute;" v-show="index==$index">
+						<img :src="i">
+					</div>
+				</transition>
+			</div>
+		</div>
+	</template>
+</body>
+<script type="text/javascript" src="vue.js"></script>
+<script type="text/javascript">
+	Vue.component('lee',{
+		template:'#lee',
+		data(){
+			return {
+				type:'',
+				index:0,
+				arr:[
+					'img/1.jpg',
+					'img/2.jpg',
+					'img/3.jpg',
+					'img/4.jpg'
+				]
+			}
+		},
+		methods:{
+			prev(){
+				this.type="lee"
+				this.index--;
+				if(this.index<=-1){
+					this.index=3
+				}
+			},
+			next(){
+				this.type="lee2"
+				this.index++;
+				if(this.index>=4){
+					this.index=0
+				}
+			}
+		}
+	})
+	new Vue({
+		el:'.box'
+	})
+</script>
+</html>
