@@ -8,7 +8,7 @@ module.exports={
 	output:{//输出
 		filename:'[name].js',//输出名字
 		path:path.resolve(__dirname,'./dist'),//输出的路径
-		publicPath:'/'//代理路径
+		publicPath:'./'//代理路径
 	},
 	devServer:{//热更新
 		contentBase:'dist',//默认指向文件
